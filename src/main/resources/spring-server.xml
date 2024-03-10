@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+<!--    1.spring扫描路径-->
+    <context:component-scan base-package="com.cqk"/>
+
+<!--    2.注册中心-->
+    <bean id="serviceRegistry" class="com.cqk.registry.impl.ZookeeperServiceRegistryImpl">
+        <constructor-arg name="zkAddress" value="${rpc.registry_address}"/>
+    </bean>
+
+    <bean id="rpcServer" class="com.cqk.server.RpcServer">
+<!--        构造参数-->
+        <constructor-arg name="serviceAddress" value="${rpc.service_address}"/>
+        <constructor-arg name="serviceRegistry" ref="serviceRegistry"/>
+    </bean>
+    <bean id="logAspect" class="com.cqk.aspect.LogAspect"></bean>
+
+
+</beans>
