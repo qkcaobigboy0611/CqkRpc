@@ -1,1 +1,81 @@
-todo...
+# CqkRPC
+simple rpc use neety,zookeeper,spring
+
+- git本地上次项目出现的问题以及解决的办法
+
+```js
+1.git init
+2.git add .
+3. git commit -m "first commit"
+4. git remote add origin https://github.com/qkcaobigboy0611/CqkRPC.git
+5. git push -u origin master
+6. Username for 'https://github.com': 2530783404@qq.com
+7. Password for 'token':
+```
+
+
+
+
+```js
+计划
+1. zookeeper register mode  finished
+2. neety server client  say hello  mode
+3. spring mode integrate
+4. 1th demo
+5. request, response, 
+6. Serializable, decode, encode
+7. load balance, filter, log .... others
+8. TODO
+```
+
+```js
+1. 创建RpcService注解类
+@Target({ElementType.TYPE})	//类，接口，枚举
+@Retention(RetentionPolicy.RUNTIME)	//运行时有效
+@Component //spring 容器扫描  spring-context
+public @interface RpcService {
+    Class<?> value();
+    String version() default "";
+}
+
+2. 扫描带有RpcService的注解并初始化handlerMap，获取接口名称以及版本号，如下:
+重写ApplicationContextAware.setApplicationContext(ApplicationContext ctx)
+Map<String, Object> serviceBeansMap = ctx.getBeansWithAnnotation(RpcService.class);
+@RpcService(value = HelloService.class, version = "sample.hello2")
+public class HelloServiceImpl2 implements HelloService {//略}
+
+3.分为以下几个步骤处理
+ a. 重写InitializingBean.afterPropertiesSet();
+ b. NIO(不推荐)/Netty(推荐) 做接收数据->解码->处理->编码->返回数据处理
+ c. 注册服务到zookeeper 
+
+4. ✅
+```
+
+##### 总结
+- 历时几天模仿完成CqkRPC，现在作出如下总结
+- 已完成功能点:Zookeeper提供服务注册与发现；Netty，SocketChannel完成通信；序列化基于Protostuff实现；Proxy.newProxyInstance(...); 动态代理模式调用Server；还有比如负载均衡采用随机，采用Builder模式构造请求对象等.目前阶段属于第一步阶段,能够完成基本的Client调用Server功能，调用依赖关系如下(类似Dubbo调用图):
+
+#### TODO
+- [x] AOP
+    - [x] LOG统一打印
+    - [ ] Prometheus监控
+    - [ ] 安全相关接口调用权限校验
+    - [ ] 性能优化？Cache？
+    - [ ] 异常处理
+    - [ ] 事务？
+- [ ] 调用链追踪增加, 进行中!!
+- [ ] 增加文件配置,如果调用Zookeeper失败，则调用本地配置文件,比如超时配置,版本,IP,Port....
+- [x] 服务发现增加Cache,增加ZookeeperWatch机制 完成✅
+- [ ] 负载均衡增加其他比如Hash,轮询机制等
+- [ ] Filter拦截过滤功能
+- [ ] Socket传输安全问题
+- [ ] 线程池子，序列化扩展，监控功能....
+- [ ] 引入连接池TODO
+- [ ] 增加`lombok`
+
+
+
+
+
+- 模仿参见[huangyong](https://gitee.com/huangyong/rpc), [dubbo](https://github.com/alibaba/dubbo)
