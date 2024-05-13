@@ -48,7 +48,7 @@ public class ZookeeperServiceRegistryImpl extends ZookeeperConnection implements
             }
             String serviceAddressPath = serviceNamePath + "[zookeeper:" + serviceAddress + "]";
             Stat exists3 = zk.exists(serviceAddressPath, false);
-
+            LOG.info("exists3");
             if(exists3 == null) {
                 createNodeData(serviceAddressPath, serviceAddress);
                 LOG.info("创建一个子目录下的子目录节点,路径为=" + serviceAddressPath + "数据为=" + serviceAddress);
