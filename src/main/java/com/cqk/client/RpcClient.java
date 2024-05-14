@@ -16,6 +16,9 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ * add qkcao 0514
+ */
 public class RpcClient extends SimpleChannelInboundHandler<RpcResponse> {
     private final static Log LOG = LogFactory.getLog(RpcClient.class);
     private RpcResponse response;
