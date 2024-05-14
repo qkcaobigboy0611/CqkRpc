@@ -43,7 +43,6 @@ public class RpcServer implements InitializingBean, ApplicationContextAware {
     /**
      * 对当前bean传入对应的Spring上下文
      * Spring容器会在创建bean之后，自动调用该Bean的setApplicationContextAware()方法，
-     *
      */
 
     @Override
@@ -97,10 +96,10 @@ public class RpcServer implements InitializingBean, ApplicationContextAware {
             String ip = addressAry[0];
             int port = Integer.parseInt(addressAry[1]);
             ChannelFuture future = serverBootstrap.bind(ip, port);
-            if(serviceRegistry != null) {
+            if (serviceRegistry != null) {
                 for (String interfaceName : handlerMap.keySet()) {
                     serviceRegistry.register(interfaceName, serviceAddress);
-                    LOG.info("注册的服务为:["+interfaceName+"-"+serviceAddress+"]");
+                    LOG.info("注册的服务为:[" + interfaceName + "-" + serviceAddress + "]");
                 }
             }
             // 关闭RPC服务器 sync:是一个阻塞操作，它会一直等待直到异步操作完成
