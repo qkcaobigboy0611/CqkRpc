@@ -57,6 +57,8 @@ public class RpcServer implements InitializingBean, ApplicationContextAware {
                     // @RpcService(value = IHelloRPC.class, version = "sample.hello.person")
                     RpcService annotation = map.getValue().getClass().getAnnotation(RpcService.class);
                     String serviceName = annotation.value().getName();
+                    LOG.info("setApplicationContext.serviceName" + JSON.toJSONString(serviceName));
+
                     String serviceVersion = annotation.version();
                     if (StringUtils.isNotBlank(serviceVersion)) {
                         serviceName += "-" + serviceVersion;
