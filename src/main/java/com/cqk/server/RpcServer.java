@@ -88,6 +88,7 @@ public class RpcServer implements InitializingBean, ApplicationContextAware {
                     pipeline.addLast(new RpcDecoder(RpcRequest.class));
                     // 编码RPC请求 2024-8-19
                     pipeline.addLast(new RpcEncoder(RpcRequest.class));
+                    // RpcServerHandler
                     pipeline.addLast(new RpcServerHandler(handlerMap));
                 }
             });
