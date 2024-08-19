@@ -86,7 +86,7 @@ public class RpcServer implements InitializingBean, ApplicationContextAware {
                     ChannelPipeline pipeline = socketChannel.pipeline();
                     // 解码RPC请求
                     pipeline.addLast(new RpcDecoder(RpcRequest.class));
-                    // 编码RPC请求
+                    // 编码RPC请求 2024-8-19
                     pipeline.addLast(new RpcEncoder(RpcRequest.class));
                     pipeline.addLast(new RpcServerHandler(handlerMap));
                 }
