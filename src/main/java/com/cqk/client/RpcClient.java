@@ -16,16 +16,21 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ * add qkcao 0514
+ */
 public class RpcClient extends SimpleChannelInboundHandler<RpcResponse> {
     private final static Log LOG = LogFactory.getLog(RpcClient.class);
     private RpcResponse response;
 
     private String host;
     private int port;
+
     public RpcClient(String host, int port) {
         this.host = host;
         this.port = port;
     }
+
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, RpcResponse rpcResponse) throws Exception {
         this.response = rpcResponse;
